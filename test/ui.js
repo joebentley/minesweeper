@@ -43,4 +43,23 @@ describe('UI', () => {
             expect(ui.transformScreenToGrid(canvas.width - 1, canvas.height - 1)).to.deep.equal({ x: 15, y: 15 });
         });
     });
+    
+    describe('transformGridToScreen()', () => {
+        it('should raise exception if out of bounds of canvas', () => {
+            expect(ui.transformGridToScreen.bind(ui, 3, 17)).to.throw(RangeError);
+            expect(ui.transformGridToScreen.bind(ui, -1, 8)).to.throw(RangeError);
+            expect(ui.transformGridToScreen.bind(ui, 17, 1)).to.throw(RangeError);
+            expect(ui.transformGridToScreen.bind(ui, 14, 1)).to.not.throw(RangeError);
+        });
+        
+        it('should transform to screen coordinates as expected', () => {
+            let unitWidth = canvas.width / grid.width,
+                unitHeight = canvas.height / grid.height;
+            
+            expect(ui.transformGridToScreen(0, 0)).to.deep.equal({ x: 0, y: 0 });
+            expect(ui.transformGridToScreen(2, 0)).to.deep.equal({ x: 2 * unitWidth, y: 0 });
+            expect(ui.transformGridToScreen(2, 1)).to.deep.equal({ x: 2 * unitWidth, y: unitHeight });
+            expect(ui.transformGridToScreen(15, 15)).to.deep.equal({ x: 15 * unitWidth, y: 15 * unitHeight });
+        });
+    });
 });
