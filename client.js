@@ -12,4 +12,5 @@ $(function() {
     setInterval(ui.draw.bind(ui, ctx), 10);
     
     $('#myCanvas').on('mousedown', ui.onMouseDown.bind(ui));
+    $('#myCanvas').on('mouseup', ui.onMouseUp.bind(ui));
 });
