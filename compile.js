@@ -9,7 +9,7 @@ if (process.argv.length < 4) {
 var infile = process.argv[2];
 var outfile = process.argv[3];
 
-browserify("./" + infile)
+browserify("./" + infile, { debug: true })
     .transform("babelify", { presets: ["es2015"] })
     .bundle()
     .pipe(fs.createWriteStream(outfile))
