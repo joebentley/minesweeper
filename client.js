@@ -7,7 +7,7 @@ $(function() {
     var canvas = document.getElementById('myCanvas');
     var ctx = canvas.getContext('2d');
     
-    var ui = new UI(canvas, new Grid(16, 16));
+    var ui = new UI(canvas, new Grid.randomGrid(16, 16, 20));
     
     setInterval(ui.draw.bind(ui, ctx), 10);
     

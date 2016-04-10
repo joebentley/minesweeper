@@ -251,4 +251,36 @@ describe('Grid', () => {
             expect(grid.isBoardClear.bind(grid)).to.not.throw(Error);
         });
     });
+    
+    describe('hasAnyBombs()', () => {
+        it('should detect whether or not there are bombs', () => {
+            expect(grid.hasAnyBombs()).to.be.false;
+            
+            grid.setSquare(10, 10, new Square(true, false));
+            
+            expect(grid.hasAnyBombs()).to.be.true;
+        });
+    });
+    
+    describe('getNumBombs()', () => {
+        it('should detect how many bombs', () => {
+            expect(grid.getNumBombs()).to.equal(0);
+            
+            grid.setSquare(10, 10, new Square(true, false));
+            expect(grid.getNumBombs()).to.equal(1);
+            grid.setSquare(10, 11, new Square(true, false));
+            expect(grid.getNumBombs()).to.equal(2);
+        });
+    });
+    
+    describe('addRandomBombs()', () => {
+        it('should add random bombs to the grid', () => {
+            grid.initialiseGrid();
+            
+            expect(grid.hasAnyBombs()).to.be.false;
+            
+            grid = grid.addRandomBombs(4);
+            expect(grid.getNumBombs()).to.equal(4);
+        });
+    });
 });
