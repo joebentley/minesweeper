@@ -3,5 +3,6 @@
     "curly": true,
     "eqeqeq": true,
     "nocomma": true,
-    "node": true
+    "node": true,
+    "eqnull": true
 }

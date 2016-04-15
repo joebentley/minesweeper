@@ -20,11 +20,7 @@ describe('Grid', () => {
         });
 
         it('should initialise grid', () => {
-            for (let x = 0; x < grid.width; x++) {
-                for (let y = 0; y < grid.height; y++) {
-                    expect(grid.grid[x][y]).to.not.be.undefined;
-                }
-            }
+            expect(grid.grid).to.deep.equal(grid.initialiseGrid().grid);
         });
 
         it('should set width/height properly', () => {
@@ -39,6 +35,14 @@ describe('Grid', () => {
         it('should produce grid with correct width/height', () => {
             expect(grid.grid).to.have.length(16); // column arrays
             expect(grid.grid[0]).to.have.length(16); // nested (row) arrays
+        });
+        
+        it('should set every square to invisible with no bombs', () => {
+            for (let x = 0; x < grid.width; x++) {
+                for (let y = 0; y < grid.height; y++) {
+                    expect(grid.grid[x][y]).to.deep.equal(new Square(false, false));
+                }
+            }
         });
         
         it('should set bombCounts', () => {
@@ -299,6 +303,39 @@ describe('Grid', () => {
         
         it('should update the bomb counts', () => {
             expect(grid.addRandomBombs.bind(grid, 20)).to.change(grid, 'bombCounts');
+        });
+    });
+    
+    describe('fillVisibleSquares()', () => {
+        it('should fill all squares on a blank board', () => {
+            grid.fillVisibleSquares(10, 10);
+            
+            for (let x = 0; x < grid.width; x++) {
+                for (let y = 0; y < grid.height; y++) {
+                    expect(grid.grid[x][y]).to.deep.equal(new Square(false, true));
+                }
+            }
+        });
+        
+        it('should fill all squares but not a bomb', () => {
+            grid.setSquare(2, 2, new Square(true, false));
+            
+            grid.fillVisibleSquares(10, 10);
+            
+            for (let x = -1; x < 2; x++) {
+                for (let y = -1; y < 2; y++) {
+                    if (x !== 0 && y !== 0) {
+                        expect(grid.getSquare(2 + x, 2 + y)).to.have.property('visible', true);
+                    }
+                }
+            }
+            
+            expect(grid.getSquare(2, 2)).to.have.property('visible', false);
+        });
+        
+        it('should not error at edge of board', () => {
+            expect(grid.fillVisibleSquares.bind(grid, 0, 0)).to.not.throw(Error);
+            expect(grid.fillVisibleSquares.bind(grid, 15, 15)).to.not.throw(Error);
         });
     });
 });
