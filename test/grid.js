@@ -134,6 +134,19 @@ describe('Grid', () => {
             neighbours = grid.getNeighbours(12, 12);
             expect(neighbours).to.not.contain({ x: 9, y: 11, square: square });
         });
+        
+        it('should detect squares on the edges', () => {
+            var bomb = Square(true);
+            grid.setSquare(4, 0, bomb);
+            
+            var neighbours = grid.getNeighbours(3, 0);
+            expect(neighbours).to.contain({ x: 4, y: 0, square: bomb});
+            
+            grid.setSquare(0, 5, bomb);
+            
+            neighbours = grid.getNeighbours(0, 4);
+            expect(neighbours).to.contain({ x: 0, y: 5, square: bomb});
+        });
 
         it('should throw exception when out of bounds', () => {
             expect(grid.getNeighbours.bind(grid, -1, 0)).to.throw(RangeError);
