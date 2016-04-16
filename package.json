@@ -16,6 +16,7 @@
   },
   "scripts": {
     "compile": "node compile.js client.js public/bundle.js",
-    "lint": "jshint lib/* && jshint test/* || true"
+    "lint": "jshint lib/* && jshint test/* || true",
+    "test": "mocha"
   }
 }
