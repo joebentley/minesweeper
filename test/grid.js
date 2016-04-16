@@ -346,6 +346,16 @@ describe('Grid', () => {
             expect(grid.getSquare(2, 2)).to.have.property('visible', false);
         });
         
+        it('should fill diagonals', () => {
+            grid.setSquare(2, 2, new Square(true));
+            grid.setSquare(2, 3, new Square(true));
+            grid.setSquare(3, 2, new Square(true));
+            
+            grid.fillVisibleSquares(5, 5);
+            
+            expect(grid.getSquare(3, 3)).to.have.property('visible', true);
+        });
+        
         it('should not error at edge of board', () => {
             expect(grid.fillVisibleSquares.bind(grid, 0, 0)).to.not.throw(Error);
             expect(grid.fillVisibleSquares.bind(grid, 15, 15)).to.not.throw(Error);
