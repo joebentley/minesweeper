@@ -4,5 +4,6 @@
     "eqeqeq": true,
     "nocomma": true,
     "node": true,
-    "eqnull": true
+    "eqnull": true,
+    "mocha": true
 }
